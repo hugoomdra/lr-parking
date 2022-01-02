@@ -1,16 +1,54 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+<h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncat">LR Place</h1>
+
+<ul class="mt-4">
+    <li 
+    v-for="v in places"
+    :key="v.id"
+    >
+    <span class="font-bold">{{ v.fields.nom }}</span> : {{ v.fields.nb_places_disponibles }} places disponibles
+    </li>
+</ul>
+
+<!-- Using utilities: -->
+<button @click="getData()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4">
+  Actualiser
+</button>
+
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import axios from 'axios'
 
 export default {
+
   name: 'App',
-  components: {
-    HelloWorld
+
+  data(){
+    return {
+      places: []
+    }
+  },
+
+  created() {
+
+    this.getData()
+
+  },
+
+  methods:{
+
+    getData(){
+      axios.get("https://api.agglo-larochelle.fr/production/opendata/api/records/1.0/search/dataset=parking___places_disponibles_en_temps_reel&rows=1000&facet=id").then((result) => {
+        this.places = result.data.records
+        console.log(this.places)
+      })
+    }
   }
+
 }
 </script>
 
