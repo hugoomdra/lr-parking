@@ -1,7 +1,9 @@
 const express = require('express');
 const serveStatic = require("serve-static")
 const path = require('path');
+let cors = require("cors"); // activation of CORS Policy
 let app = express();
+app.use(cors());
 app.use(serveStatic(path.join(__dirname, 'dist')));
 const port = process.env.PORT || 3000;
 app.listen(port);
