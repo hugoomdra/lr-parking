@@ -43,9 +43,7 @@ export default {
 
     getData(){
       axios.get("/data_parking").then((result) => {
-        console.log(result)
         this.places = result.data.records
-        console.log(this.places)
       })
     }
   }

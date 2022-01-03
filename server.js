@@ -1,6 +1,7 @@
 const express = require('express');
 const serveStatic = require("serve-static")
 const path = require('path');
+const axios = require('axios');
 let app = express();
 app.use(serveStatic(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
@@ -23,18 +24,15 @@ app.use(function (req, res, next) {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port);
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
 
 app.get('/data_parking', function(req, res) {
+  let uri = "https://api.agglo-larochelle.fr/production/opendata/api/records/1.0/search/dataset=parking___places_disponibles_en_temps_reel&rows=1000&facet=id"
 
-    fetch("https://api.agglo-larochelle.fr/production/opendata/api/records/1.0/search/dataset=parking___places_disponibles_en_temps_reel&rows=1000&facet=id",{
-        method: 'GET',
-        cache: "no-cache", 
-        credentials: "same-origin", 
-        headers: {"Content-Type": "application/json"}
-      })
-    .then(data => {
-        console.log(res.send(data))
-    })
+  axios.get(uri).then(response => {
+    res.send(response.data);
+  })
 
-  });
+});
