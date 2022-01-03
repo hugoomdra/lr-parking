@@ -42,7 +42,8 @@ export default {
   methods:{
 
     getData(){
-      axios.get("https://api.agglo-larochelle.fr/production/opendata/api/records/1.0/search/dataset=parking___places_disponibles_en_temps_reel&rows=1000&facet=id").then((result) => {
+      axios.get("/data_parking").then((result) => {
+        console.log(result)
         this.places = result.data.records
         console.log(this.places)
       })

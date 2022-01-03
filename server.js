@@ -21,5 +21,20 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
 const port = process.env.PORT || 3000;
 app.listen(port);
+
+app.get('/data_parking', function(req, res) {
+
+    fetch("https://api.agglo-larochelle.fr/production/opendata/api/records/1.0/search/dataset=parking___places_disponibles_en_temps_reel&rows=1000&facet=id",{
+        method: 'GET',
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: {"Content-Type": "application/json"}
+      })
+    .then(data => {
+        console.log(res.send(data))
+    })
+
+  });
